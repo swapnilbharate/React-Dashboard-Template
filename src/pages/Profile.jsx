@@ -9,7 +9,7 @@ export default function Profile() {
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState({
     name: username,
-    email: `${username}@northstar.io`,
+    email: `${username}@businessanalysis.io`,
     phone: "9876543210",
     department: role === "admin" ? "Management" : "Employee",
     designation: role === "admin" ? "System Admin" : "Team Member",

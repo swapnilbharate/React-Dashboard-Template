@@ -58,7 +58,7 @@ export default function Reports() {
         <ExportButtons data={filteredUsers} />
         <table>
           <thead><tr><th>Name</th><th>Email</th><th>Company</th></tr></thead>
-          <tbody>{filteredUsers.map((u) => <tr key={u.id}><td>{u.name}</td><td>{u.email}</td><td>{u.company?.name || "Northstar"}</td></tr>)}</tbody>
+          <tbody>{filteredUsers.map((u) => <tr key={u.id}><td>{u.name}</td><td>{u.email}</td><td>{u.company?.name || "Business Analysis"}</td></tr>)}</tbody>
         </table>
       </div>
 
