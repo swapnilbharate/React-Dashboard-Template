@@ -1,56 +1,35 @@
-import { useEffect, useState } from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import { trafficSources } from "../mockData";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from "chart.js";
-
-import { Line } from "react-chartjs-2";
-
-// Register required elements
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function ApiChart() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((res) => res.json())
-      .then((d) => setData(d.slice(0, 10)));
-  }, []);
-
-  const chartData = {
-    labels: data.map((d) => `Task ${d.id}`),
+  const data = {
+    labels: trafficSources.map((source) => source.label),
     datasets: [
       {
-        label: "Tasks",
-        data: data.map((d) => d.id),
-        borderColor: "#4b6cb7",
-        backgroundColor: "rgba(75, 108, 183, 0.3)",
-        tension: 0.3,
-        pointRadius: 5
-      },
-    ],
+        data: trafficSources.map((source) => source.value),
+        backgroundColor: trafficSources.map((source) => source.color),
+        borderWidth: 0,
+        hoverOffset: 8
+      }
+    ]
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: "72%",
+    plugins: { legend: { position: "bottom" } }
   };
 
   return (
     <div className="chart-card">
-      <h5>API Based Chart</h5>
-      <Line data={chartData} />
+      <h5>Traffic Mix <span className="badge-pill online">Live</span></h5>
+      <div style={{ height: 280 }}>
+        <Doughnut data={data} options={options} />
+      </div>
     </div>
   );
 }

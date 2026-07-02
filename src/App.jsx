@@ -1,6 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -19,9 +21,21 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 
+function ThemeSync() {
+  const theme = useSelector((state) => state.ui.theme);
+
+  useEffect(() => {
+    document.body.classList.toggle("dark", theme === "dark");
+    window.localStorage.setItem("business-dashboard-theme", theme);
+  }, [theme]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
+      <ThemeSync />
       <ToastContainer />
 
       <Routes>

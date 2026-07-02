@@ -1,24 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import StatsCards from "../../components/StatsCards";
 import ExportButtons from "../../components/ExportButtons";
 import DynamicFilters from "../../components/DynamicFilters";
 import DateFilter from "../../components/DateFilter";
+import ComparisonChart from "../../components/ComparisonChart";
+import { getUsers, getTodos } from "../../services/reportService";
 
 
 export default function Reports() {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [todos, setTodos] = useState([]);
-  const [posts, setPosts] = useState([]);
 
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   const loadData = async () => {
     const u = await getUsers();
@@ -26,8 +23,12 @@ export default function Reports() {
     setFilteredUsers(u);
 
     setTodos(await getTodos());
-    setPosts(await getPosts());
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadData();
+  }, []);
 
   const handleFilter = (filter) => {
     let result = users;

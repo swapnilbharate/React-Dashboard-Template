@@ -1,82 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaUsers, FaMoneyBill, FaShoppingCart, FaChartLine } from "react-icons/fa";
+import { dashboardStats } from "../mockData";
 
 export default function StatsCards() {
+  const [values, setValues] = useState(dashboardStats.map((item) => item.value));
 
-  const [users, setUsers] = useState(0);
-  const [revenue, setRevenue] = useState(0);
-  const [orders, setOrders] = useState(0);
-  const [growth, setGrowth] = useState(0);
-
-  // INITIAL FAST COUNTING ANIMATION
   useEffect(() => {
-    const initInterval = setInterval(() => {
-      setUsers((u) => (u < 588 ? u + 2 : 588));
-      setRevenue((r) => (r < 38560 ? r + 80 : 88560));
-      setOrders((o) => (o < 265 ? o + 1 : 265));
-      setGrowth((g) => (g < 12 ? g + 1 : 12));
-    }, 40);
+    const timer = setInterval(() => {
+      setValues((prev) => prev.map((value, index) => {
+        if (index === 0) return value + 2;
+        if (index === 1) return value + 40;
+        if (index === 2) return value + 1;
+        return Number((value + 0.1).toFixed(1));
+      }));
+    }, 3500);
 
-    setTimeout(() => {
-      clearInterval(initInterval);
-    }, 2500);
-
-    return () => clearInterval(initInterval);
+    return () => clearInterval(timer);
   }, []);
 
-  // CONTINUOUS REALISTIC UPDATES AFTER ANIMATION
-  useEffect(() => {
-    const liveInterval = setInterval(() => {
-      setUsers((prev) => prev + Math.floor(Math.random() * 3));
-      setRevenue((prev) => prev + Math.floor(Math.random() * 50));
-      setOrders((prev) => prev + Math.floor(Math.random() * 2));
-
-      setGrowth((prev) =>
-        prev < 100 ? parseFloat((prev + Math.random() * 0.2).toFixed(1)) : prev
-      );
-    }, 5000);
-
-    return () => clearInterval(liveInterval);
-  }, []);
-
-  const cards = [
-    {
-      title: "Total Users",
-      value: users,
-      icon: <FaUsers />,
-      color: "primary",
-    },
-    {
-      title: "Revenue",
-      value: `$${revenue}`,
-      icon: <FaMoneyBill />,
-      color: "success",
-    },
-    {
-      title: "Orders",
-      value: orders,
-      icon: <FaShoppingCart />,
-      color: "warning",
-    },
-    {
-      title: "Growth",
-      value: `${growth}%`,
-      icon: <FaChartLine />,
-      color: "info",
-    },
-  ];
+  const cards = useMemo(() => dashboardStats.map((item, index) => ({
+    ...item,
+    value: values[index],
+    icon: item.icon === "users" ? <FaUsers /> : item.icon === "revenue" ? <FaMoneyBill /> : item.icon === "orders" ? <FaShoppingCart /> : <FaChartLine />,
+    color: index % 2 === 0 ? "primary" : index === 2 ? "warning" : "info"
+  })), [values]);
 
   return (
-    <div className="row mb-4 fade-in">
-      {cards.map((c, i) => (
-        <div key={i} className="col-md-3">
-          <div className={`stat-card bg-${c.color} stat-animate`}>
-            <div>
-              <h6>{c.title}</h6>
-              <h3>{c.value}</h3>
-            </div>
-            <div className="stat-icon">{c.icon}</div>
+    <div className="stats-grid mb-4">
+      {cards.map((card, index) => (
+        <div key={card.title} className={`stat-card ${card.color} stagger`} style={{ animationDelay: `${index * 0.08}s` }}>
+          <div>
+            <h6>{card.title}</h6>
+            <h3>{card.prefix}{card.value.toLocaleString()}{card.suffix}</h3>
+            <div className="trend-pill">{card.change}</div>
           </div>
+          <div className="stat-icon">{card.icon}</div>
         </div>
       ))}
     </div>

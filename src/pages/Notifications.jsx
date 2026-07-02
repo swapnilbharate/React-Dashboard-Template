@@ -1,59 +1,38 @@
-import { useSelector } from "react-redux";
+import { useMemo, useState } from "react";
+import { notificationsSeed } from "../mockData";
 
 export default function Notifications() {
-  const auth = useSelector((state) => state.auth || {});
-  const role = auth.role || "admin";
+  const [notifications, setNotifications] = useState(notificationsSeed);
+  const [filter, setFilter] = useState("All");
 
-  const notifications = [
-    {
-      id: 1,
-      title: "New User Registered",
-      message: "A new user signed up today.",
-      type: "info",
-      adminOnly: true
-    },
-    {
-      id: 2,
-      title: "System Update",
-      message: "System maintenance scheduled at 10 PM.",
-      type: "warning",
-      adminOnly: false
-    },
-    {
-      id: 3,
-      title: "Monthly Report Ready",
-      message: "Your monthly performance report is ready.",
-      type: "success",
-      adminOnly: false
-    },
-    {
-      id: 4,
-      title: "Security Alert",
-      message: "Unusual login detected.",
-      type: "danger",
-      adminOnly: true
-    }
-  ];
-
-  const filtered = notifications.filter(
-    (n) => !n.adminOnly || role === "admin"
-  );
+  const filtered = useMemo(() => notifications.filter((item) => filter === "All" || item.category === filter || (filter === "Unread" && item.unread)), [filter, notifications]);
 
   return (
-    <div className="container mt-4">
-      <h3>🔔 Notifications</h3>
-      <hr />
-
-      {filtered.length === 0 && (
-        <p className="text-muted">No notifications available.</p>
-      )}
-
-      {filtered.map((n) => (
-        <div key={n.id} className={`alert alert-${n.type}`}>
-          <strong>{n.title}</strong>
-          <p className="mb-0">{n.message}</p>
+    <div>
+      <h3 className="page-title">Notifications</h3>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <p className="page-subtitle mb-0">Stay on top of key moments and updates.</p>
+        <div className="d-flex gap-2">
+          <button className="btn btn-outline btn-sm" onClick={() => setFilter("All")}>All</button>
+          <button className="btn btn-outline btn-sm" onClick={() => setFilter("Unread")}>Unread</button>
+          <button className="btn btn-primary btn-sm" onClick={() => setNotifications((items) => items.map((item) => ({ ...item, unread: false })))}>Mark all read</button>
         </div>
-      ))}
+      </div>
+
+      <div className="notification-list">
+        {filtered.map((item) => (
+          <div key={item.id} className={`notification-item ${item.unread ? "unread" : ""}`}>
+            <span className="notification-dot" />
+            <div className="flex-grow-1">
+              <div className="d-flex justify-content-between align-items-center">
+                <strong>{item.title}</strong>
+                <span className="page-subtitle">{item.time}</span>
+              </div>
+              <div className="page-subtitle mt-1">{item.message}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

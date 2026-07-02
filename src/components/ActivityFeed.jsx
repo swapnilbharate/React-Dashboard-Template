@@ -1,43 +1,31 @@
+import { useEffect, useState } from "react";
+import { activityFeed } from "../mockData";
+
 export default function ActivityFeed() {
-  const activities = [
-    { text: "Admin logged in", type: "success" },
-    { text: "New user registered", type: "info" },
-    { text: "Report generated", type: "primary" },
-    { text: "System settings updated", type: "warning" },
-    { text: "Password changed", type: "danger" },
-  ];
+  const [activities, setActivities] = useState(activityFeed);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActivities((prev) => [{ id: Date.now(), title: "Live sync completed", detail: "A new platform event was processed", time: "just now", accent: "primary" }, ...prev].slice(0, 4));
+    }, 8000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div
-      className="card p-3 shadow-sm"
-      style={{
-        transition: "0.3s",
-        animation: "fadeIn 0.8s",
-        borderLeft: "5px solid green",
-      }}
-    >
-      <h5 style={{ color: "green" }}>⚡ Recent Activity</h5>
-
-      <ul className="list-group mt-2">
-        {activities.map((a, i) => (
-          <li
-            key={i}
-            className={`list-group-item list-group-item-${a.type}`}
-            style={{
-              cursor: "pointer",
-              transition: "0.3s",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "scale(1.02)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.transform = "scale(1)")
-            }
-          >
-            {a.text}
-          </li>
+    <div className="panel-card">
+      <h5>Recent Activity</h5>
+      <div className="timeline-list">
+        {activities.map((item) => (
+          <div key={item.id} className="timeline-item">
+            <span className={`timeline-dot ${item.accent}`} />
+            <div>
+              <strong>{item.title}</strong>
+              <div className="page-subtitle">{item.detail}</div>
+              <div className="page-subtitle">{item.time}</div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
