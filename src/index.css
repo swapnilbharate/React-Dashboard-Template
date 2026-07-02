@@ -1,0 +1,393 @@
+/* ===== GLOBAL STYLES ===== */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f1f3f6;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ===== LOGIN PAGE STYLING (NEW ADDITION ONLY) ===== */
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.login-card {
+  width: 380px;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.login-card h3 {
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+}
+
+.login-card .form-control {
+  padding: 10px;
+  font-size: 16px;
+  color: #000;
+  background: #ffffff;
+}
+
+.login-card .btn {
+  font-size: 16px;
+  padding: 10px;
+}
+
+.login-card p {
+  color: #555;
+}
+
+.login-card label {
+  color: #000;
+}
+
+.login-card .input-group .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* ===== MODERN PROFILE CARD STYLING ===== */
+
+.profile-card-modern {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card-modern:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.profile-image-wrapper {
+  margin-bottom: 10px;
+}
+
+.profile-avatar {
+  font-size: 60px;
+  color: white;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.profile-info {
+  color: white;
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* ROLE COLORS */
+.role-badge.admin {
+  background: #00d4ff;
+  color: black;
+}
+
+.role-badge.manager {
+  background: #ffc107;
+  color: black;
+}
+
+.role-badge.user {
+  background: #28a745;
+  color: white;
+}
+
+/* PROFILE LINK */
+.profile-edit-link {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #e0e0ff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.profile-edit-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* COLLAPSED MODE FIX */
+.sidebar.collapsed .profile-card-modern {
+  padding: 8px;
+}
+
+.sidebar.collapsed .profile-info {
+  display: none;
+}
+
+.sidebar.collapsed .profile-avatar {
+  font-size: 35px;
+}
+
+
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4b6cb7, #182848);
+  padding: 20px 10px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar-title {
+  text-align: center;
+  color: white;
+  margin-bottom: 25px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.sidebar .nav-link {
+  color: white;
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.active-link {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+}
+
+/* ---- Collapsible Sidebar ---- */
+.sidebar.collapsed {
+  width: 80px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-title,
+.sidebar.collapsed .profile-card div,
+.sidebar.collapsed .nav-link span {
+  display: none;
+}
+
+.toggle-icon {
+  color: white;
+  cursor: pointer;
+}
+
+/* ---- Profile Card ---- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+
+/* ---- Menu Icons Animation ---- */
+.menu-icon {
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+
+.nav-link:hover .menu-icon {
+  transform: rotate(10deg) scale(1.2);
+}
+
+/* ---- Submenu ---- */
+.submenu {
+  margin-left: 20px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.submenu .nav-link {
+  font-size: 14px;
+  background: rgba(255,255,255,0.1);
+}
+
+/* ---- Badges ---- */
+.badge {
+  font-size: 12px;
+}
+
+/* ===== CONTENT AREA ===== */
+.content {
+  width: 100%;
+  background: white;
+  min-height: 100vh;
+  border-radius: 10px 0 0 0;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* ---- Statistics Cards ---- */
+.stat-card {
+  padding: 20px;
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.stat-icon {
+  font-size: 32px;
+  opacity: 0.8;
+}
+
+/* ---- Chart Card ---- */
+.chart-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: scale(1.02);
+}
+
+/* ===== NEW DASHBOARD EFFECTS ===== */
+
+.fade-in {
+  animation: fadeIn 0.8s ease;
+}
+
+.stat-animate {
+  animation: slideUp 0.7s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== DARK MODE ===== */
+.dark {
+  background: #121212;
+  color: white;
+}
+
+.dark .content {
+  background: #1e1e1e;
+  color: white;
+}
+
+.dark .sidebar {
+  background: linear-gradient(180deg, #000428, #004e92);
+}
+
+.dark .chart-card {
+  background: #1e1e1e;
+}
+
+/* ===== TEXT VISIBILITY FIXES ===== */
+.content {
+  color: #000 !important;
+  background: #ffffff !important;
+}
+
+.container,
+.card,
+.alert,
+.form-control,
+label,
+p,
+h1, h2, h3, h4, h5, h6 {
+  color: #000 !important;
+}
+
+.alert-info,
+.alert-warning,
+.alert-success,
+.alert-danger {
+  color: #000 !important;
+}
+
+.form-control {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+.dark .container,
+.dark .card,
+.dark p,
+.dark h1,
+.dark h2,
+.dark h3 {
+  color: #ffffff !important;
+}
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .content {
+    border-radius: 0;
+  }
+}
+
+  .profile-avatar {
+    font-size: 45px;
+  }
